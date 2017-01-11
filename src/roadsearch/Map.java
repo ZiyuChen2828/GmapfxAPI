@@ -1,5 +1,13 @@
 package roadsearch;
 
+import gmapsfx.GoogleMapView;
+import gmapsfx.MapComponentInitializedListener;
+import gmapsfx.javascript.JavascriptArray;
+import gmapsfx.javascript.object.GoogleMap;
+import gmapsfx.javascript.object.LatLong;
+import gmapsfx.javascript.object.MapOptions;
+import gmapsfx.javascript.object.MapTypeIdEnum;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -15,7 +23,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class Map extends Application{
+public class Map extends Application implements MapComponentInitializedListene{
 
 	/* GUI components */
 	private Stage primaryStage;
@@ -59,7 +67,7 @@ public class Map extends Application{
 		// TODO Auto-generated method stub
 		launch(args);
 	}
-
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
@@ -69,8 +77,12 @@ public class Map extends Application{
 	    VBox right = new VBox();
 	    
 	    /* box of map file dropdown and load button */
-	    HBox mapFiles = new HBox(6);
+	    HBox mapFiles = new HBox(10);
+	    
+	    mapFiles.setAlignment(Pos.CENTER);
+	    
 	    choiceBox = new ChoiceBox<>();
+	    choiceBox.setPrefWidth(200);
 	    loadButton = new Button("Load Map");
 	    mapFiles.getChildren().addAll(choiceBox, loadButton);
 	    
@@ -164,7 +176,6 @@ public class Map extends Application{
 		/* set size for the right box */
 		right.setPadding(new Insets(20, 0, 0, 0));
 		right.setPrefWidth(300);
-		
 		
 		/* set overall layout */
 		BorderPane bp = new BorderPane();
