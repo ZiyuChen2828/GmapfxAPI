@@ -1,10 +1,6 @@
 package roadgraph;
 
-/**
- * The class represent the edge in the roadgraph
- * @author Qiannan
- *
- */
+
 public class MapEdge {
 		
 	private String roadName;

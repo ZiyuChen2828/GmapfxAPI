@@ -19,9 +19,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.web.WebView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class Map extends Application implements MapComponentInitializedListener{
 
@@ -64,6 +68,8 @@ public class Map extends Application implements MapComponentInitializedListener{
 
 	private GoogleMapView mapComponent;
 	private GoogleMap map;
+	private DataSet ds;
+	private JavascriptArray jsArray;
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -195,7 +201,60 @@ public class Map extends Application implements MapComponentInitializedListener{
 	@Override
 	public void mapInitialized() {
 		// TODO Auto-generated method stub
-		
+    	LatLong center = new LatLong(39.9474533, -75.1876342);
+
+    	MapOptions options = new MapOptions();
+		options.center(center)
+		       .mapMarker(false)
+		       .mapType(MapTypeIdEnum.ROADMAP)
+		       //maybe set false
+		       .mapTypeControl(true)
+		       .overviewMapControl(false)
+		       .panControl(true)
+		       .rotateControl(false)
+		       .scaleControl(false)
+		       .streetViewControl(false)
+		       .zoom(18)
+		       .zoomControl(true);
+
+        map = mapComponent.createMap(options);
+        
+        setupJSAlerts(mapComponent.getWebView());
+        
+        /* Create a controller and attach button listeners for all buttons */
+
+        new Controller(
+				map, ds,
+				choiceBox, alg,
+				loadButton, startButton, destButton,
+				path, visualize, reset, 
+				mapLabel, startLabel, destLabel, currPosLabel,
+				jsArray);
 	}
+	
+    public static void setLabel(String label, String message) {
+    	if("curr".equals(label)){
+    		currPosLabel.setText(message);
+    	}
+    }
+    
+    // set up the alert window
+    private void setupJSAlerts(WebView webView) {
+        webView.getEngine().setOnAlert( e -> {
+            Stage popup = new Stage();
+            popup.initOwner(primaryStage);
+            popup.initStyle(StageStyle.UTILITY);
+            popup.initModality(Modality.WINDOW_MODAL);
+            
+            StackPane content = new StackPane();
+            content.getChildren().setAll(
+              new Label(e.getData())
+            );
+            content.setPrefSize(200, 100);
+
+            popup.setScene(new Scene(content));
+            popup.showAndWait();
+        });
+    }
 
 }

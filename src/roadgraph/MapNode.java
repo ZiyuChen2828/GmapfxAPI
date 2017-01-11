@@ -5,11 +5,7 @@ import geography.GeographicPoint;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * The class represents the node in the roadgraph
- * @author Qiannan
- *
- */
+
 public class MapNode implements Comparable<MapNode>{
 	private Set<MapEdge> edges;
 	private GeographicPoint location;

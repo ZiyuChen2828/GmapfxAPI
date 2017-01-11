@@ -20,10 +20,6 @@ import geography.GeographicPoint;
 import geography.RoadSegment;
 import roadgraph.MapGraph;
 
-/**
- * This class reads different kinds of files into different graph structures.
- * @author ZiyuChen
- */
 public class MapLoader implements GraphLoader  {
 	
 	@Override

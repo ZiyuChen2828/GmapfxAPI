@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import geography.GeographicPoint;
+import gmapsfx.javascript.IJavascriptRuntime;
 import gmapsfx.javascript.JavascriptArray;
+import gmapsfx.javascript.JavascriptRuntime;
 import gmapsfx.javascript.object.GoogleMap;
+import gmapsfx.javascript.object.LatLong;
 import gmapsfx.javascript.object.Marker;
+import gmapsfx.javascript.object.MarkerOptions;
 import gmapsfx.shapes.Polyline;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -215,6 +219,30 @@ public class Controller {
 	    	/* disable other buttons */
 	    	path.setDisable(true);
 	    	visualize.setDisable(true);
+    	});
+    	
+    	visualize.setOnAction(e -> {
+    		/* visualization */
+    		ds.setUnselectedMarkers(false);
+    		map.fitBounds(ds.getBound("visualBound"));
+    		jsArray = new JavascriptArray();
+    		for(int i = 0; i < ds.exploredNodes().size(); i++) {
+    			
+    			LatLong ll = ds.exploredNodes().get(i);
+    			
+        		Marker newMarker = new Marker(new MarkerOptions()
+        										.animation(null)
+        										.icon(DataSet.markerURL)
+        										.position(ll)
+        										.title(null)
+        										.visible(true));
+        		
+        		jsArray.push(newMarker);
+        		
+    		}
+    		IJavascriptRuntime runtime = JavascriptRuntime.getInstance();
+    		String command = runtime.getFunction("visualizeSearch", map, jsArray);
+    		runtime.execute(command);
     	});
 		
 	}

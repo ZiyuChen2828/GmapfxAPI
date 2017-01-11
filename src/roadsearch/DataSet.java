@@ -23,13 +23,7 @@ import netscape.javascript.JSObject;
 import roadgraph.MapGraph;
 import util.MapLoader;
 
-/**
- * Class to wrap the graph, .map file map, and other information about
- * the map data sets used
- *
- * @author Xiaofan
- *
- */
+
 public class DataSet {
 	
 	private String filePath;
