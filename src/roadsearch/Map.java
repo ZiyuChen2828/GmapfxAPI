@@ -23,7 +23,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class Map extends Application implements MapComponentInitializedListene{
+public class Map extends Application implements MapComponentInitializedListener{
 
 	/* GUI components */
 	private Stage primaryStage;
@@ -62,6 +62,8 @@ public class Map extends Application implements MapComponentInitializedListene{
 	private TextField mapFile;
 	private Button fetch;
 
+	private GoogleMapView mapComponent;
+	private GoogleMap map;
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -72,6 +74,8 @@ public class Map extends Application implements MapComponentInitializedListene{
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
 		this.primaryStage = primaryStage;
+		mapComponent = new GoogleMapView();
+		mapComponent.addMapInitializedListener(this);
 		
 		/* Right Panel */
 	    VBox right = new VBox();
@@ -180,12 +184,18 @@ public class Map extends Application implements MapComponentInitializedListene{
 		/* set overall layout */
 		BorderPane bp = new BorderPane();
 		Scene scene = new Scene(bp);
-//        bp.setCenter(mapComponent);
+        bp.setCenter(mapComponent);
         bp.setRight(right);
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Mini-Google Map");
         primaryStage.show();
 	    
+	}
+
+	@Override
+	public void mapInitialized() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
